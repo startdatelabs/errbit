@@ -114,7 +114,7 @@ class Notice
   end
 
   def emailable?
-    app.email_at_notices.include?(similar_count)
+    app.email_at_notices.include?(similar_count) && server_environment.try([], 'environment-name').in?('production', 'test')
   end
 
   def should_email?
