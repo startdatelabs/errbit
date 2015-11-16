@@ -76,6 +76,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller', platform: 'ruby'
   gem 'meta_request'
+  gem 'airbrussh', require: false
 end
 
 group :test do
