@@ -1,4 +1,5 @@
 require 'hoptoad_notifier'
+require 'hoptoad'
 
 ##
 # Processes a new error report.
