@@ -23,11 +23,12 @@ set :deploy_to, '/var/data/www/apps/errbit'
 set :keep_releases, 5
 
 set :pty, false
-set :ssh_options, forward_agent: true
+set :ssh_options, {
+  forward_agent: true
+}
 
 set :linked_files, fetch(:linked_files, []) + %w(
   .env
-  config/unicorn.rb
 )
 
 set :linked_dirs, fetch(:linked_dirs, []) + %w(
@@ -35,6 +36,8 @@ set :linked_dirs, fetch(:linked_dirs, []) + %w(
   tmp/cache tmp/pids tmp/sockets
   vendor/bundle
 )
+
+set :log_level, :debug
 
 # Rvm
 set :rvm_roles, [:app, :web, :db]
