@@ -29,9 +29,9 @@ gem 'haml'
 gem 'htmlentities'
 gem 'kaminari', '>= 0.14.1'
 # Use temporary, until not release 5.0.2
-# gem 'mongoid', github: 'mongodb/mongoid'#'~> 5.0.0'
-gem 'mongo'
-gem 'mongoid', '4.0.2'
+gem 'mongoid', github: 'mongodb/mongoid'#'~> 5.0.0'
+# gem 'mongo'
+# gem 'mongoid', '4.0.2'
 gem 'mongoid_rails_migrations'
 gem 'rack-ssl', require: 'rack/ssl' # force SSL
 gem 'rack-ssl-enforcer', require: false

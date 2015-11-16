@@ -12,9 +12,7 @@ Mongoid.configure do |config|
         end
 
   config.load_configuration(
-    # MONGO 4
-    sessions: {
-    # clients: {
+    clients: {
       default: {
         uri: uri
       }
