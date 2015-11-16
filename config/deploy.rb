@@ -10,7 +10,14 @@
 lock '3.4.0'
 
 set :application, 'errbit'
-set :repo_url, 'https://github.com/startdatelabs/errbit'
+
+# Repository
+set :scm, :git
+set :scm_verbose, false
+set :repo_url, 'git@github.com:startdatelabs/errbit.git'
+set :git_enable_submodules, false
+
+
 set :branch, ENV['branch'] || 'master'
 set :deploy_to, '/var/data/www/apps/errbit'
 set :keep_releases, 5
