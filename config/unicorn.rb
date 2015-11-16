@@ -11,7 +11,7 @@ stdout_path "#{ root }/log/unicorn.log"
 listen '/tmp/errbit.unicorn.sock'
 listen ENV['PORT'] || 8082
 
-timeout 30
+timeout 60
 
 preload_app true
 
