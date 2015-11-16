@@ -55,6 +55,7 @@ Rails.application.routes.draw do
       resources :stats, :only => [], :defaults => { :format => 'json' } do
         collection do
           get :app
+          get :daily_report
         end
       end
     end
