@@ -17,7 +17,7 @@ module AirbrakeApi
           request:            request,
           server_environment: server_environment,
           api_key:            params['key'].present? ? params['key'] : params['project_id'],
-          notifier:           params['notifier'],
+          notifier:           context.any? ? context['notifier'] : params['notifier'],
           user_attributes:    user_attributes
         }
 
