@@ -53,7 +53,9 @@ class ErrorReport
     return @notice if @notice
 
     make_notice
-    error.notices << @notice
+    notice.err_id = error.id
+    notice.save!
+
     cache_attributes_on_problem
     email_notification
     services_notification
