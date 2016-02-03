@@ -81,8 +81,14 @@ private
 
   def link_to_github(app, text = nil)
     return unless app.github_repo?
-    href = format("%s#L%s", app.github_url_to_file(decorated_path + file_name), number)
-    h.link_to(text || file_name, href, target: '_blank')
+
+    if decorated_path.match /startwire-base/
+      href = format("%s#L%s", ['https://github.com/startdatelabs/startwire-base/blob/master', decorated_path.sub('startwire-base', ''), file_name].join(''), number)
+      h.link_to(text || file_name, href, target: '_blank')
+    else
+      href = format("%s#L%s", app.github_url_to_file(decorated_path + file_name), number)
+      h.link_to(text || file_name, href, target: '_blank')
+    end
   end
 
   def link_to_bitbucket(app, text = nil)
