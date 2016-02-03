@@ -97,6 +97,13 @@ Changing the fingerprinter (under the 'config' menu) applies to all apps and
 the change affects only notices that arrive after the change. If you want to
 refingerprint old notices, you can run `rake errbit:notice_refingerprint`.
 
+Managing apps
+---------------------
+An Errbit app is a place to collect error notifications from your external
+application deployments.
+
+See [apps](docs/apps.md)
+
 Authentication
 --------------
 ### Configuring GitHub authentication:
@@ -186,8 +193,8 @@ When upgrading Errbit, please run:
 git pull origin master # assuming origin is the github.com/errbit/errbit repo
 bundle install
 rake db:migrate
-rake db:mongoid:create_indexes
 rake db:mongoid:remove_undefined_indexes
+rake db:mongoid:create_indexes
 rake assets:precompile
 ```
 

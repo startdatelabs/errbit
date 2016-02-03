@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
-# RAILS_VERSION = '~> 4.1.14'
-RAILS_VERSION = '~> 4.2.0'
+RAILS_VERSION = '~> 4.2.5.1'
 
 send :ruby, ENV['GEMFILE_RUBY_VERSION'] if ENV['GEMFILE_RUBY_VERSION']
 
@@ -19,7 +18,7 @@ gem 'railties', RAILS_VERSION
 
 gem 'actionmailer_inline_css'
 gem 'decent_exposure'
-gem 'devise'
+gem 'devise', '~> 3.5.5'
 gem 'dotenv-rails'
 gem 'draper'
 gem 'errbit_plugin'
@@ -27,11 +26,8 @@ gem 'errbit_github_plugin'
 gem 'font-awesome-rails'
 gem 'haml'
 gem 'htmlentities'
-gem 'kaminari', '>= 0.14.1'
-# Use temporary, until not release 5.0.2
-gem 'mongoid', github: 'mongodb/mongoid'#'~> 5.0.0'
-# gem 'mongo'
-# gem 'mongoid', '4.0.2'
+gem 'kaminari', '>= 0.16.3'
+gem 'mongoid', '5.0.2'
 gem 'mongoid_rails_migrations'
 gem 'rack-ssl', require: 'rack/ssl' # force SSL
 gem 'rack-ssl-enforcer', require: false
@@ -68,7 +64,7 @@ gem 'yajl-ruby', platform: 'ruby'
 gem 'json', platform: 'jruby'
 
 group :development, :test do
-  gem 'airbrake', require: false
+  gem 'airbrake', '~> 4.3.5', require: false
   gem 'pry-rails'
   gem 'pry-byebug', platforms: [:mri]
   gem 'quiet_assets'
@@ -81,6 +77,8 @@ group :development do
   gem 'capistrano-rails',    require: false
   gem 'capistrano-rvm',      require: false
   gem 'capistrano3-unicorn', require: false
+  # gem 'capistrano-rbenv',   require: false
+  # gem 'capistrano3-puma',   require: false
 
   # better errors
   gem 'better_errors'
@@ -110,6 +108,7 @@ group :heroku, :production do
   gem 'unicorn-worker-killer'
 end
 
+# gem 'puma'
 gem 'therubyracer', platform: :ruby # C Ruby (MRI) or Rubinius, but NOT Windows
 gem 'sass-rails'
 gem 'uglifier'
