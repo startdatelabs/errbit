@@ -5,7 +5,8 @@ class Backtrace
   IN_APP_PATH = %r{^\[PROJECT_ROOT\](?!(\/vendor))/?}
   GEMS_PATH = %r{\[GEM_ROOT\]\/gems\/([^\/]+)}
   IN_SW_PATH = %r{/var/data/www/apps/startwire/releases/(\w+)/}
-  IN_SW_TEST_PATH = %{/home/ubuntu/startwire/}
+  IN_SW_TEST_PATH = %r{/home/ubuntu/startwire/}
+  GEM_BASE_PATH = %r{\[GEM_ROOT\]/bundler/gems/startwire-base-(\w+)}
 
   field :fingerprint
   field :lines

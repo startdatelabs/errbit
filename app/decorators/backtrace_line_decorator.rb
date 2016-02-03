@@ -4,7 +4,8 @@ class BacktraceLineDecorator < Draper::Decorator
   def in_app?
     object[:file].match(Backtrace::IN_APP_PATH) ||
     object[:file].match(Backtrace::IN_SW_PATH) ||
-    object[:file].match(Backtrace::IN_SW_TEST_PATH)
+    object[:file].match(Backtrace::IN_SW_TEST_PATH) ||
+    object[:file].match(Backtrace::GEM_BASE_PATH)
   end
 
   def number
@@ -24,7 +25,10 @@ class BacktraceLineDecorator < Draper::Decorator
   end
 
   def file_relative
-    file.to_s.sub(Backtrace::IN_APP_PATH, EMPTY_STRING).sub(Backtrace::IN_SW_PATH, EMPTY_STRING).sub(Backtrace::IN_SW_TEST_PATH, EMPTY_STRING)
+    file.to_s.sub(Backtrace::IN_APP_PATH, EMPTY_STRING).
+    sub(Backtrace::IN_SW_PATH, EMPTY_STRING).
+    sub(Backtrace::IN_SW_TEST_PATH, EMPTY_STRING).
+    sub(Backtrace::GEM_BASE_PATH, 'startwire-base')
   end
 
   def file_name
@@ -50,6 +54,7 @@ class BacktraceLineDecorator < Draper::Decorator
       sub(Backtrace::IN_APP_PATH, '').
       sub(Backtrace::IN_SW_PATH, '').
       sub(Backtrace::IN_SW_TEST_PATH, '').
+      sub(Backtrace::GEM_BASE_PATH, 'startwire-base').
       sub(Backtrace::GEMS_PATH, "<strong>\\1</strong>")
   end
 
