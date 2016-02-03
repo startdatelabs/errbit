@@ -42,7 +42,7 @@ set :log_level, :debug
 # Rvm
 set :rvm_roles, [:app, :web, :db]
 set :rvm_type, :user
-set :rvm_ruby_version, '2.2.3@errbit'
+set :rvm_ruby_version, '2.3.0@errbit'
 
 # Unicorn
 set :unicorn_pid, -> { "#{ current_path }/tmp/pids/unicorn.pid" }
