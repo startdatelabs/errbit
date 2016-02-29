@@ -118,7 +118,7 @@ gem 'jquery-rails', '~> 2.1.4'
 gem 'pjax_rails'
 gem 'underscore-rails'
 
-gem 'errbit_jira_plugin', github: 'startdatelabs/errbit_jira_plugin', require: false
+gem 'errbit_jira_plugin', github: 'startdatelabs/errbit_jira_plugin'
 
 ENV['USER_GEMFILE'] ||= './UserGemfile'
 eval_gemfile ENV['USER_GEMFILE'] if File.exist?(ENV['USER_GEMFILE'])
