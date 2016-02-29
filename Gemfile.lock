@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/startdatelabs/errbit_jira_plugin.git
-  revision: c04b3df8fb9670c8b0be51a3efec7dfe6eb6e8e1
+  revision: 303ec2d5daf27712873d7402ee99ccc1c0d6b07e
   specs:
     errbit_jira_plugin (0.2.0)
       errbit_plugin
