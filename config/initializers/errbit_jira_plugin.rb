@@ -13,10 +13,10 @@ module ErrbitJiraPlugin
         ]
       }
     end
+  end
 
-    def self.read_static_file(file)
-      File.read(File.join(self.root, 'static', file))
-    end
+  def self.read_static_file(file)
+    File.read(File.join(self.root, 'static', file))
   end
 end
 
