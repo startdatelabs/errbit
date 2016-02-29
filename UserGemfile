@@ -1,1 +1,0 @@
-gem 'errbit_jira_plugin', github: 'startdatelabs/errbit_jira_plugin', require: false
