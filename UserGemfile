@@ -1,0 +1,1 @@
+gem 'errbit_jira_plugin', github: 'jetruby/errbit_jira_plugin', require: false
