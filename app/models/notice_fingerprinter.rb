@@ -24,7 +24,7 @@ class NoticeFingerprinter
     if backtrace_lines < 0
       material << backtrace.lines
     else
-      material << backtrace.lines.slice(0, backtrace_lines)
+      material << backtrace.lines.to_a.slice(0, backtrace_lines)
     end
 
     Digest::MD5.hexdigest(material.map(&:to_s).join)
