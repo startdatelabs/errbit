@@ -35,6 +35,8 @@ set :linked_dirs, fetch(:linked_dirs, []) + %w(
   log
   tmp/cache tmp/pids tmp/sockets
   vendor/bundle
+  tmp/minified_js
+  tmp/maps_js
 )
 
 set :log_level, :debug

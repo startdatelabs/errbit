@@ -35,12 +35,25 @@ module AirbrakeApi
 
       def backtrace
         (error['backtrace'] || []).map do |backtrace_line|
+          line = consume_map(backtrace_line)
           {
-            method: backtrace_line['function'],
-            file:   backtrace_line['file'],
-            number: backtrace_line['line'],
-            column: backtrace_line['column']
+            method: line['function'],
+            file:   line['file'],
+            number: line['line'],
+            column: line['column']
           }
+        end
+      end
+
+      def consume_map(backtrace_line)
+        return backtrace_line unless context['sourceMapEnabled']
+
+        file = backtrace_line['file']
+
+        if file =~ /.js/
+          SourceMapConsumer.process(backtrace_line)
+        else
+          backtrace_line
         end
       end
 
