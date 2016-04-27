@@ -50,12 +50,20 @@ set :rvm_ruby_version, '2.3.0@errbit'
 set :unicorn_pid, -> { "#{ current_path }/tmp/pids/unicorn.pid" }
 set :unicorn_config_path, -> { "#{ release_path }/config/unicorn.rb" }
 after 'deploy:publishing', 'deploy:restart'
+after 'bundle:install', 'npm:install'
 
 namespace :deploy do
 
   desc 'Restart application'
   task :restart do
     invoke 'unicorn:restart'
+  end
+end
+
+namespace :npm do
+  desc 'Npm dependences install'
+  task :install do
+    execute :npm, 'install'
   end
 end
 
