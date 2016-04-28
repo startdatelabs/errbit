@@ -22,6 +22,12 @@ set :branch, ENV['branch'] || 'master'
 set :deploy_to, '/var/data/www/apps/errbit'
 set :keep_releases, 5
 
+set :default_env, {
+  'RAILS_ROOT' => release_path,
+  # 'BUNDLE_GEMFILE' => release_path.join('Gemfile'),
+  'RAILS_ENV' => fetch(:rails_env)
+}
+
 set :pty, false
 set :ssh_options, {
   forward_agent: true
@@ -50,7 +56,7 @@ set :rvm_ruby_version, '2.3.0@errbit'
 set :unicorn_pid, -> { "#{ current_path }/tmp/pids/unicorn.pid" }
 set :unicorn_config_path, -> { "#{ release_path }/config/unicorn.rb" }
 after 'deploy:publishing', 'deploy:restart'
-after 'bundler:install', 'npm:install'
+# after 'bundler:install', 'npm:install'
 
 namespace :deploy do
 
@@ -66,7 +72,7 @@ namespace :npm do
     on roles(:app) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          execute :rake, 'npm:install'
+          execute :rake, 'npm:install RAILS_ENV=production'
         end
       end
     end

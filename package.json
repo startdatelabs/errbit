@@ -3,6 +3,9 @@
   "dependencies" : {
     "source-map": "0.5.5"
   },
+  "devDependencies" : {
+    "browserify": "13.0.0"
+  },
   "license": "MIT",
   "engines": {
     "node": ">= 0.10"
