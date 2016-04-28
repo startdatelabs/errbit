@@ -1,5 +1,6 @@
 require 'uri'
 require 'open-uri'
+require 'posix/spawn'
 
 module AirbrakeApi
   class SourceMapConsumer
