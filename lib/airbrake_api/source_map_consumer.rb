@@ -26,15 +26,21 @@ module AirbrakeApi
           map_line = backtrace_line['line']
           map_column = backtrace_line['column']
 
-          result = POSIX::Spawn::Child.new("node node/map_consumer.js '#{ map_file_path }' #{ map_column } #{ map_line }")
-          result = POSIX::Spawn::Child.new("node node/map_consumer.js '#{ map_file_path }' #{ map_line } #{ map_column }") if result.out.blank?
-          if result.out.present?
+
+          result = POSIX::Spawn::Child.new("node node/map_consumer.js '#{ map_file_path }' #{ map_line } #{ map_column }")
+          parsed = JSON.parse(result.out)
+
+          if parsed['line'].blank?
+            result = POSIX::Spawn::Child.new("node node/map_consumer.js '#{ map_file_path }' #{ map_column } #{ map_line }")
             parsed = JSON.parse(result.out)
+          end
+
+          if parsed['line'].present?
             {
-              method: parsed['name'],
-              file:   asset_url(minified_url, parsed['source']),
-              number: parsed['line'],
-              column: parsed['column']
+              'function' => parsed['name'],
+              'file' =>   asset_url(minified_url, parsed['source']),
+              'line' => parsed['line'],
+              'column' => parsed['column']
             }
           else
             backtrace_line
