@@ -50,7 +50,7 @@ module AirbrakeApi
 
         file = backtrace_line['file']
 
-        if file =~ /.js/
+        if file =~ /\.js/ && file =~ /startwire\.com/
           SourceMapConsumer.process(backtrace_line)
         else
           backtrace_line
