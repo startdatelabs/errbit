@@ -30,12 +30,12 @@ module AirbrakeApi
           result = POSIX::Spawn::Child.new("node node/map_consumer.js '#{ map_file_path }' #{ map_line } #{ map_column }")
           parsed = JSON.parse(result.out)
 
-          if parsed['line'].blank?
+          if parsed&.dig('line').blank?
             result = POSIX::Spawn::Child.new("node node/map_consumer.js '#{ map_file_path }' #{ map_column } #{ map_line }")
             parsed = JSON.parse(result.out)
           end
 
-          if parsed['line'].present?
+          if parsed&.dig('line').present?
             {
               'function' => parsed['name'],
               'file' =>   asset_url(minified_url, parsed['source']),
@@ -43,6 +43,7 @@ module AirbrakeApi
               'column' => parsed['column']
             }
           else
+            HoptoadNotifier.notify("Can't parse map", { params: backtrace_line })
             backtrace_line
           end
         end
