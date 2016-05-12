@@ -28,11 +28,13 @@ module AirbrakeApi
 
           node_path = POSIX::Spawn::Child.new("which node").out.gsub(/\n/, '')
 
-          result = POSIX::Spawn::Child.new(%{sudo -H -u deployer bash -c '#{ node_path } node/map_consumer.js "#{ map_file_path }" #{ map_line } #{ map_column }'})
+          string = "#{ node_path } node/map_consumer.js '#{ map_file_path }' #{ map_line } #{ map_column }"
+
+          result = POSIX::Spawn::Child.new("#{ node_path } node/map_consumer.js '#{ map_file_path }' #{ map_line } #{ map_column }")
           parsed = JSON.parse(result.out)
 
           if parsed&.dig('line').blank?
-            result = POSIX::Spawn::Child.new(%{sudo -H -u deployer bash -c '#{ node_path } node/map_consumer.js "#{ map_file_path }" #{ map_column } #{ map_line }'})
+            result = POSIX::Spawn::Child.new("#{ node_path } node/map_consumer.js '#{ map_file_path }' #{ map_column } #{ map_line }")
             parsed = JSON.parse(result.out)
           end
 
@@ -47,7 +49,9 @@ module AirbrakeApi
             HoptoadNotifier.notify(Exception.new("Can't parse map"), {
               parameters: backtrace_line.merge({
                 posix: result.out,
-                posix_err: result.err
+                posix_err: result.err,
+                string: string,
+                ex: %x{#{ string }}
               })
             })
             backtrace_line
