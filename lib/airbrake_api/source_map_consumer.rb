@@ -28,11 +28,11 @@ module AirbrakeApi
 
           node_path = POSIX::Spawn::Child.new("which node").out.gsub(/\n/, '')
 
-          result = POSIX::Spawn::Child.new("#{ node_path } #{ Rails.root.join('node/map_consumer.js') } '#{ map_file_path }' #{ map_line } #{ map_column }")
+          result = POSIX::Spawn::Child.new("#{ node_path } node/map_consumer.js '#{ map_file_path }' #{ map_line } #{ map_column }")
           parsed = JSON.parse(result.out)
 
           if parsed&.dig('line').blank?
-            result = POSIX::Spawn::Child.new("#{ node_path } #{ Rails.root.join('node/map_consumer.js') } '#{ map_file_path }' #{ map_column } #{ map_line }")
+            result = POSIX::Spawn::Child.new("#{ node_path } node/map_consumer.js '#{ map_file_path }' #{ map_column } #{ map_line }")
             parsed = JSON.parse(result.out)
           end
 
