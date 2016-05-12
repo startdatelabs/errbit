@@ -43,7 +43,7 @@ module AirbrakeApi
               'column' => parsed['column']
             }
           else
-            HoptoadNotifier.notify(Exception.new("Can't parse map"), { parameters: backtrace_line })
+            HoptoadNotifier.notify(Exception.new("Can't parse map"), { parameters: backtrace_line.merge({ posix: result.out }) })
             backtrace_line
           end
         end
