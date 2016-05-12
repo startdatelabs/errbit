@@ -26,7 +26,8 @@ module AirbrakeApi
           map_line = backtrace_line['line']
           map_column = backtrace_line['column']
 
-          node_path = POSIX::Spawn::Child.new("which node").out.gsub(/\n/, '')
+          # node_path = POSIX::Spawn::Child.new("which node").out.gsub(/\n/, '')
+          node_path = '/home/deployer/.nvm/versions/node/v6.1.0/bin/node'
 
           string = "#{ node_path } node/map_consumer.js '#{ map_file_path }' #{ map_line } #{ map_column }"
 
