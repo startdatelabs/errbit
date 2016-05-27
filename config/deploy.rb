@@ -56,7 +56,6 @@ set :rvm_ruby_version, '2.3.0@errbit'
 set :unicorn_pid, -> { "#{ current_path }/tmp/pids/unicorn.pid" }
 set :unicorn_config_path, -> { "#{ release_path }/config/unicorn.rb" }
 after 'deploy:publishing', 'deploy:restart'
-# after 'bundler:install', 'npm:install'
 
 namespace :deploy do
 
@@ -66,16 +65,12 @@ namespace :deploy do
   end
 end
 
-namespace :npm do
-  desc 'Npm dependences install'
-  task :install do
-    on roles(:app) do
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          execute :rake, 'npm:install RAILS_ENV=production'
-        end
-      end
-    end
+before "deploy:assets:precompile", "deploy:npm_install"
+
+namespace :deploy do
+  desc "Run npm install"
+  task :npm_install do
+    invoke_command "bash -c '. /home/deploy/.nvm/nvm.sh && cd #{release_path} && npm install'"
   end
 end
 
