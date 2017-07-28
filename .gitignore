@@ -17,3 +17,4 @@ config/newrelic.yml
 bundle
 coverage
 *#
+node_modules/**/*
