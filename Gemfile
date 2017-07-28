@@ -1,16 +1,8 @@
 source 'https://rubygems.org'
 
-RAILS_VERSION = '~> 4.2.6'
+RAILS_VERSION = '~> 4.2.8'
 
 send :ruby, ENV['GEMFILE_RUBY_VERSION'] if ENV['GEMFILE_RUBY_VERSION']
-
-detected_ruby_version = Gem::Version.new(RUBY_VERSION.dup)
-required_ruby_version = Gem::Version.new('2.3.0') # minimum supported version
-
-if detected_ruby_version < required_ruby_version
-  fail "RUBY_VERSION must be at least #{required_ruby_version}, " \
-       "detected RUBY_VERSION #{RUBY_VERSION}"
-end
 
 gem 'actionmailer', RAILS_VERSION
 gem 'actionpack', RAILS_VERSION
@@ -27,7 +19,7 @@ gem 'font-awesome-rails'
 gem 'haml'
 gem 'htmlentities'
 gem 'kaminari', '>= 0.16.3'
-gem 'mongoid', '5.1.3'
+gem 'mongoid', '< 6'
 gem 'mongoid_rails_migrations'
 gem 'rack-ssl', require: 'rack/ssl' # force SSL
 gem 'rack-ssl-enforcer', require: false
@@ -60,6 +52,8 @@ gem 'flowdock'
 # ---------------------------------------
 # GitHub OAuth
 gem 'omniauth-github'
+# Google OAuth
+gem 'omniauth-google-oauth2'
 
 gem 'ri_cal'
 gem 'yajl-ruby', platform: 'ruby'
@@ -74,15 +68,11 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano',          require: false
-  gem 'capistrano-bundler',  require: false
-  gem 'capistrano-rails',    require: false
-  gem 'capistrano-rvm',      require: false
-  gem 'capistrano3-unicorn', require: false
-  # gem 'capistrano-rbenv',   require: false
-  # gem 'capistrano3-puma',   require: false
-
-  # better errors
+  gem 'capistrano',         require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-rbenv',   require: false
+  gem 'capistrano3-puma',   require: false
   gem 'better_errors'
   gem 'binding_of_caller', platform: 'ruby'
   gem 'meta_request'
@@ -90,14 +80,15 @@ group :development do
 end
 
 group :test do
-  gem 'rspec', '~> 3.3'
-  gem 'rspec-rails', '~> 3.0', require: false
+  gem 'rspec', '~> 3.5'
+  gem 'rspec-rails', '~> 3.5', require: false
   gem 'rspec-activemodel-mocks'
   gem 'rspec-its'
   # gem 'mongoid-rspec', '~> 3.0.0', require: false
   gem 'fabrication'
   gem 'capybara'
   gem 'poltergeist'
+  gem 'phantomjs'
   gem 'launchy'
   gem 'email_spec'
   gem 'timecop'
@@ -106,12 +97,13 @@ end
 
 group :heroku, :production do
   gem 'rails_12factor', require: ENV.key?("HEROKU")
-  gem 'unicorn', require: false, platform: 'ruby'
-  gem 'unicorn-worker-killer'
 end
 
-# gem 'puma'
-gem 'therubyracer', platform: :ruby # C Ruby (MRI) or Rubinius, but NOT Windows
+group :no_docker, :test, :development do
+  gem 'therubyracer', platform: :ruby # C Ruby (MRI) or Rubinius, but NOT Windows
+end
+
+gem 'puma'
 gem 'sass-rails'
 gem 'uglifier'
 # We can't upgrade because not compatible to jquery >= 1.9.
@@ -122,6 +114,7 @@ gem 'pjax_rails'
 gem 'underscore-rails'
 
 gem 'errbit_jira_plugin', github: 'startdatelabs/errbit_jira_plugin'
+gem 'sucker_punch'
 
 ENV['USER_GEMFILE'] ||= './UserGemfile'
 eval_gemfile ENV['USER_GEMFILE'] if File.exist?(ENV['USER_GEMFILE'])

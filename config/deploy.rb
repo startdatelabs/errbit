@@ -52,25 +52,13 @@ set :rvm_roles, [:app, :web, :db]
 set :rvm_type, :user
 set :rvm_ruby_version, '2.3.0@errbit'
 
-# Unicorn
-set :unicorn_pid, -> { "#{ current_path }/tmp/pids/unicorn.pid" }
-set :unicorn_config_path, -> { "#{ release_path }/config/unicorn.rb" }
-after 'deploy:publishing', 'deploy:restart'
-
-namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    invoke 'unicorn:restart'
-  end
-end
-
 before "deploy:assets:precompile", "deploy:npm_install"
 
 namespace :deploy do
   desc "Run npm install"
   task :npm_install do
     invoke_command "bash -c '. /home/deploy/.nvm/nvm.sh && cd #{release_path} && npm install'"
+    invoke_command "bash -c '. /home/deploy/.nvm/nvm.sh && cd #{release_path} && npm install browserify-incremental'"
   end
 end
 
@@ -84,12 +72,14 @@ namespace :errbit do
 
       {
         'config/newrelic.example.yml' => 'config/newrelic.yml',
-        'config/unicorn.default.rb' => 'config/unicorn.rb',
+        'config/puma.default.rb' => 'config/puma.rb',
       }.each do |src, target|
         unless test("[ -f #{shared_path}/#{target} ]")
           upload! src, "#{shared_path}/#{target}"
         end
       end
+
+      invoke 'puma:config'
     end
   end
 end
@@ -106,3 +96,6 @@ namespace :db do
     end
   end
 end
+
+set :puma_conf, "#{shared_path}/config/puma.rb"
+set :puma_bind, 'tcp://0.0.0.0:8080'

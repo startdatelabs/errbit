@@ -1,9 +1,9 @@
 language: ruby
 rvm:
   - 2.1
-  - 2.2
-  - 2.3.0
-  - rbx-2
+  - 2.2.6
+  - 2.3.3
+  - 2.4.1
   - ruby-head
   - jruby-head
 env:
@@ -18,9 +18,8 @@ before_script:
   - bundle exec rake errbit:bootstrap
 script:
   - bundle exec rspec
-  - bundle exec rubocop --lint
+  - bundle exec rubocop
 matrix:
   allow_failures:
-    - rvm: rbx-2
     - rvm: ruby-head
     - rvm: jruby-head
